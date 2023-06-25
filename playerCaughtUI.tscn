@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://chypdu2wpvfhh"]
+
+[ext_resource type="FontFile" uid="uid://c8j3l1b0flkv" path="res://Cinzel-VariableFont_wght.ttf" id="1_ai2vg"]
+
+[node name="playerCaughtUI" type="CanvasLayer"]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.5
+offset_top = -39.0
+offset_right = 384.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_ai2vg")
+text = "Rest in peace invader...
+We will get another invader to avenge you. 
+We expect even higher security where you got caught, though previous areas may not have as much."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -159.0
+offset_top = -63.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_ai2vg")
+text = "Press Enter to try again as a new invader"

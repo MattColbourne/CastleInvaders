@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn8wdyvt21kbt"]
+
+[ext_resource type="Texture2D" uid="uid://vedtye6ala23" path="res://diamond.png" id="1_7xeip"]
+[ext_resource type="Texture2D" uid="uid://dr0w70uopib32" path="res://diamondreal.png" id="1_uq32u"]
+[ext_resource type="Script" path="res://diamond.gd" id="2_8ykpw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5fq6"]
+size = Vector2(42, 46)
+
+[node name="diamond" type="Sprite2D"]
+light_mask = 16
+visibility_layer = 16
+texture = ExtResource("1_uq32u")
+script = ExtResource("2_8ykpw")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+light_mask = 16
+visibility_layer = 16
+scale = Vector2(1.35156, 1.38281)
+energy = 0.53
+range_item_cull_mask = 16
+texture = ExtResource("1_7xeip")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_j5fq6")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

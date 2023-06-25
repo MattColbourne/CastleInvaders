@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://iw5wbx124flv"]
+
+[ext_resource type="Script" path="res://mainMenu.gd" id="1_p7ewu"]
+[ext_resource type="Shader" path="res://overlayShader.gdshader" id="2_twima"]
+[ext_resource type="Script" path="res://overlaySprite.gd" id="3_fix3w"]
+[ext_resource type="FontFile" uid="uid://c8j3l1b0flkv" path="res://Cinzel-VariableFont_wght.ttf" id="4_7pmx8"]
+[ext_resource type="AudioStream" uid="uid://bu7cucykq8o4c" path="res://theme3.wav" id="5_fljeu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_korlc"]
+shader = ExtResource("2_twima")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2wla3"]
+frequency = 1.0
+fractal_octaves = 6
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uiwlo"]
+noise = SubResource("FastNoiseLite_2wla3")
+
+[sub_resource type="Gradient" id="Gradient_e2xo8"]
+offsets = PackedFloat32Array(0.980645)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sc8d6"]
+gradient = SubResource("Gradient_e2xo8")
+
+[node name="main_menu" type="Node2D"]
+script = ExtResource("1_p7ewu")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="titleLabel" type="Label" parent="UILayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -71.0
+offset_right = 118.0
+offset_bottom = 71.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("4_7pmx8")
+theme_override_font_sizes/font_size = 50
+text = "Castle
+Invaders"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="titleLabel2" type="Label" parent="UILayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -190.0
+offset_top = -214.0
+offset_right = 190.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_7pmx8")
+theme_override_font_sizes/font_size = 25
+text = "Click To Start"
+horizontal_alignment = 1
+
+[node name="overlaySprite" type="Sprite2D" parent="UILayer"]
+material = SubResource("ShaderMaterial_korlc")
+position = Vector2(576, 324)
+scale = Vector2(2.25, 1.26563)
+texture = SubResource("NoiseTexture2D_uiwlo")
+script = ExtResource("3_fix3w")
+metadata/_edit_lock_ = true
+
+[node name="noiseTimer" type="Timer" parent="UILayer/overlaySprite"]
+wait_time = 0.1
+autostart = true
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(574, 327.5)
+scale = Vector2(18.9375, 11.2344)
+texture = SubResource("GradientTexture2D_sc8d6")
+metadata/_edit_lock_ = true
+
+[node name="mainThemesongPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fljeu")
+volume_db = -20.0
+autoplay = true
+
+[connection signal="timeout" from="UILayer/overlaySprite/noiseTimer" to="UILayer/overlaySprite" method="_on_noise_timer_timeout"]

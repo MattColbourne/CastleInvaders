@@ -1,0 +1,120 @@
+[gd_scene load_steps=16 format=3 uid="uid://dq3vyltumdmg4"]
+
+[ext_resource type="Shader" path="res://overlayShader.gdshader" id="1_incy8"]
+[ext_resource type="Script" path="res://winScreen.gd" id="1_mgx5m"]
+[ext_resource type="Script" path="res://overlaySprite.gd" id="2_aqdrm"]
+[ext_resource type="Texture2D" uid="uid://dr0w70uopib32" path="res://diamondreal.png" id="3_5ol27"]
+[ext_resource type="PackedScene" uid="uid://cn8wdyvt21kbt" path="res://diamond.tscn" id="3_axhe7"]
+[ext_resource type="FontFile" uid="uid://c8j3l1b0flkv" path="res://Cinzel-VariableFont_wght.ttf" id="3_lgrob"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_10vlh"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_w3fvg"]
+offsets = PackedFloat32Array(0.980645)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hk83d"]
+gradient = SubResource("Gradient_w3fvg")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cndkg"]
+shader = ExtResource("1_incy8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hkr7c"]
+frequency = 1.0
+fractal_octaves = 6
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_etj6g"]
+noise = SubResource("FastNoiseLite_hkr7c")
+
+[sub_resource type="Curve" id="Curve_lh1tg"]
+min_value = -1.0
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wud8c"]
+curve = SubResource("Curve_lh1tg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i6301"]
+emission_shape = 1
+emission_sphere_radius = 41.42
+particle_flag_disable_z = true
+spread = 5.21
+flatness = 0.12
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = -989.47
+orbit_velocity_max = -989.47
+scale_min = 0.25
+scale_max = 0.25
+color = Color(1, 0.25098, 1, 1)
+hue_variation_min = -0.55
+hue_variation_max = 0.55
+hue_variation_curve = SubResource("CurveTexture_wud8c")
+
+[node name="winScreen" type="Node2D"]
+script = ExtResource("1_mgx5m")
+
+[node name="background" type="Sprite2D" parent="."]
+z_index = -3
+material = SubResource("CanvasItemMaterial_10vlh")
+position = Vector2(574, 327.5)
+scale = Vector2(18.9375, 11.2344)
+texture = SubResource("GradientTexture2D_hk83d")
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="overlaySprite" type="Sprite2D" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_cndkg")
+position = Vector2(576, 324)
+scale = Vector2(2.25, 1.26563)
+texture = SubResource("NoiseTexture2D_etj6g")
+script = ExtResource("2_aqdrm")
+metadata/_edit_lock_ = true
+
+[node name="noiseTimer" type="Timer" parent="CanvasLayer/overlaySprite"]
+wait_time = 0.1
+autostart = true
+
+[node name="winLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -345.0
+offset_right = 346.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_lgrob")
+text = "Congratulations! You successfully invaded the castle and got the diamond in ____ minutes!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="winLabel2" type="Label" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -345.5
+offset_top = -69.0
+offset_right = 345.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_lgrob")
+text = "Press Enter to return to main menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="diamond" parent="." instance=ExtResource("3_axhe7")]
+position = Vector2(576, 324)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="diamond"]
+z_index = -1
+amount = 32
+sub_emitter = NodePath(".")
+process_material = SubResource("ParticleProcessMaterial_i6301")
+texture = ExtResource("3_5ol27")
+lifetime = 10.0
+
+[connection signal="timeout" from="CanvasLayer/overlaySprite/noiseTimer" to="CanvasLayer/overlaySprite" method="_on_noise_timer_timeout"]

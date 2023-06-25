@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=3 uid="uid://d1v7bvdop8k7o"]
+
+[ext_resource type="Script" path="res://numberButton.gd" id="1_0rcsb"]
+[ext_resource type="Texture2D" uid="uid://bg08e4dkiiupn" path="res://icon.svg" id="1_yghei"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_byicb"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8ij4w"]
+resource_name = "wall"
+texture = ExtResource("1_yghei")
+6:1/0 = 0
+6:1/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_byicb")
+6:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:1/0/physics_layer_0/angular_velocity = 0.0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:1/0/physics_layer_0/polygon_1/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/0/physics_layer_0/angular_velocity = 0.0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/modulate = Color(0.239216, 0.0980392, 0, 1)
+1:1/0/z_index = 5
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+4:2/0 = 0
+4:2/0/modulate = Color(0.239216, 0.839216, 0, 1)
+4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:2/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_0d8j2"]
+occlusion_layer_0/light_mask = 1
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_8ij4w")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b5ofu"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8m7fy"]
+width = 64
+height = 16
+noise = SubResource("FastNoiseLite_b5ofu")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cky1"]
+size = Vector2(64, 64)
+
+[node name="numberButton" type="Node2D"]
+script = ExtResource("1_0rcsb")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_0d8j2")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65536, 262144, 2, 0, 262144, 2, 65535, 262144, 2, -1, 262144, 2, 131070, 262144, 2, 131071, 262144, 2, 65536, 262144, 2, 65537, 262144, 2, 1, 262144, 2, -65535, 262144, 2, -131071, 262144, 2, -131072, 262144, 2, -65537, 262144, 2, -65538, 262144, 2, -2, 262144, 2, 65534, 262144, 2)
+
+[node name="buttonUpLight" type="PointLight2D" parent="."]
+position = Vector2(0, 24)
+texture = SubResource("NoiseTexture2D_8m7fy")
+
+[node name="buttonNumLabel" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -41.0
+offset_right = 20.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 45
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_4cky1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

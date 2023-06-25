@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://d1i1w7q2xiia7"]
+
+[ext_resource type="Shader" path="res://playerDecoyShader.gdshader" id="1_d8iu6"]
+[ext_resource type="Script" path="res://playerDecoy.gd" id="1_fu014"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vbxc"]
+shader = ExtResource("1_d8iu6")
+
+[sub_resource type="Gradient" id="Gradient_cf6bf"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bt03q"]
+gradient = SubResource("Gradient_cf6bf")
+width = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5txe"]
+size = Vector2(10, 10)
+
+[node name="playerDecoy" type="CharacterBody2D"]
+z_index = 10
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_fu014")
+
+[node name="playerDecoySprite" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_1vbxc")
+position = Vector2(-2.68221e-07, 1.04308e-07)
+scale = Vector2(0.5, 10)
+texture = SubResource("GradientTexture1D_bt03q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e5txe")
+
+[node name="destroyDecoyTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="destroyDecoyTimer" to="." method="_on_destroy_decoy_timer_timeout"]

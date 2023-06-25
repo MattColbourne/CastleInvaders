@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://6yur6ikk851g"]
+
+[ext_resource type="Script" path="res://guard.gd" id="1_bqd6s"]
+[ext_resource type="Texture2D" uid="uid://ngujiqaam28x" path="res://enemyVision.png" id="1_dswa8"]
+[ext_resource type="Texture2D" uid="uid://ckc5tv1qu0bhr" path="res://enemyVision2.png" id="2_34yge"]
+[ext_resource type="Shader" path="res://guardLook.gdshader" id="2_ramwo"]
+[ext_resource type="Script" path="res://deathTransition.gd" id="5_p3p4s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x43nl"]
+shader = ExtResource("2_ramwo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l32vc"]
+shader = ExtResource("2_ramwo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kv7oa"]
+shader = ExtResource("2_ramwo")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j8h6t"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_cf6bf"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8aom8"]
+gradient = SubResource("Gradient_cf6bf")
+width = 20
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_30i6b"]
+radius = 23.0
+
+[node name="guard" type="CharacterBody2D"]
+z_index = 10
+motion_mode = 1
+script = ExtResource("1_bqd6s")
+
+[node name="EnemyVision" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_x43nl")
+position = Vector2(61.4155, -1.59177e-06)
+rotation = -1.5708
+scale = Vector2(0.5, 0.743433)
+texture = ExtResource("1_dswa8")
+
+[node name="EnemyVision2" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_l32vc")
+position = Vector2(3.8147e-06, -4.76837e-07)
+scale = Vector2(0.2, 0.2)
+
+[node name="EnemyVision3" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kv7oa")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_34yge")
+
+[node name="guardSprite" type="Sprite2D" parent="."]
+modulate = Color(0.643137, 0.0431373, 0.0235294, 1)
+material = SubResource("CanvasItemMaterial_j8h6t")
+scale = Vector2(0.55, 11)
+texture = SubResource("GradientTexture1D_8aom8")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+rotation = -1.5708
+polygon = PackedVector2Array(65, 128, 0, -5, -65, 128)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_30i6b")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = -1.5708
+polygon = PackedVector2Array(65, 128, 0, -5, -65, 128)
+disabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_30i6b")
+disabled = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 4.0
+target_desired_distance = 4.0
+
+[node name="directionTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="caughtTransition" type="Node2D" parent="."]
+process_mode = 3
+script = ExtResource("5_p3p4s")
+
+[node name="caughtSound" type="AudioStreamPlayer" parent="caughtTransition"]
+volume_db = -20.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="directionTimer" to="." method="_on_direction_timer_timeout"]
