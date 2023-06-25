@@ -18,8 +18,8 @@ func onFire():
 		
 func notOnFire():
 	$burnTimer.stop()
-	$healthLabel.visible = false
-	health = 3
+	#$healthLabel.visible = false
+	#health = 3
 	
 func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.

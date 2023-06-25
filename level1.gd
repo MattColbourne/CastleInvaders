@@ -22,6 +22,7 @@ func openGate():
 	if get_node_or_null("doorCollider") != null:
 		$doorCollider.queue_free()
 		$doorMap.visible = false
+		$doorSound.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

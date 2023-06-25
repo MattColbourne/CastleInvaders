@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://tyif0eonyvtj"]
+[gd_scene load_steps=42 format=3 uid="uid://tyif0eonyvtj"]
 
 [ext_resource type="Texture2D" uid="uid://bg08e4dkiiupn" path="res://icon.svg" id="1_34rc0"]
 [ext_resource type="Script" path="res://level3.gd" id="1_vjsc4"]
@@ -9,8 +9,10 @@
 [ext_resource type="Script" path="res://overlaySprite.gd" id="4_vxvca"]
 [ext_resource type="Script" path="res://waterShader.gd" id="5_1g5dm"]
 [ext_resource type="FontFile" uid="uid://c8j3l1b0flkv" path="res://Cinzel-VariableFont_wght.ttf" id="5_utk3y"]
+[ext_resource type="Script" path="res://speedrunTimerLabel.gd" id="6_43kea"]
 [ext_resource type="PackedScene" uid="uid://d1v7bvdop8k7o" path="res://numberButton.tscn" id="10_bfu7j"]
 [ext_resource type="PackedScene" uid="uid://6yur6ikk851g" path="res://guard.tscn" id="11_lul2h"]
+[ext_resource type="AudioStream" uid="uid://bhdk2rbebq0bj" path="res://doorOpenSound.wav" id="13_wm0vt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gvxf7"]
 shader = ExtResource("3_1bb85")
@@ -243,6 +245,29 @@ theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="speedrunTimerLabel" type="Label" parent="UILayer"]
+process_mode = 3
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("6_43kea")
+
+[node name="tabMainMenuLabel" type="Label" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -51.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Press tab to 
+end the game 
+and go to the main menu."
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="background" type="Sprite2D" parent="."]
 z_index = -3
 material = SubResource("CanvasItemMaterial_uffia")
@@ -366,6 +391,11 @@ navigation_polygon = SubResource("NavigationPolygon_0i4p8")
 
 [node name="NavigationRegion2D5" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_fbyux")
+
+[node name="doorSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1079, 256)
+stream = ExtResource("13_wm0vt")
+volume_db = -20.0
 
 [connection signal="timeout" from="UILayer/overlaySprite/noiseTimer" to="UILayer/overlaySprite" method="_on_noise_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

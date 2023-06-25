@@ -25,6 +25,7 @@ colors = PackedColorArray(0, 0, 0, 1)
 gradient = SubResource("Gradient_e2xo8")
 
 [node name="main_menu" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_p7ewu")
 
 [node name="UILayer" type="CanvasLayer" parent="."]

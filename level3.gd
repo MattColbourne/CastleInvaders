@@ -47,6 +47,7 @@ func openDoor() -> void:
 	$doorTileMap.visible = false
 	$StaticBody2D.queue_free()
 	openedDoor = true
+	$doorSound.play()
 
 func openNumGate(buttonNum) -> bool:
 	if buttonArray.size()>0:

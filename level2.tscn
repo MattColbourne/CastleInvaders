@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c0q8fd3o8rpe0"]
+[gd_scene load_steps=35 format=3 uid="uid://c0q8fd3o8rpe0"]
 
 [ext_resource type="Script" path="res://level2.gd" id="1_3u23d"]
 [ext_resource type="Texture2D" uid="uid://bg08e4dkiiupn" path="res://icon.svg" id="1_7vcmq"]
@@ -6,10 +6,12 @@
 [ext_resource type="Shader" path="res://overlayShader.gdshader" id="3_68778"]
 [ext_resource type="Script" path="res://overlaySprite.gd" id="4_ocxq1"]
 [ext_resource type="FontFile" uid="uid://c8j3l1b0flkv" path="res://Cinzel-VariableFont_wght.ttf" id="5_7whop"]
+[ext_resource type="Script" path="res://speedrunTimerLabel.gd" id="6_dgt6d"]
 [ext_resource type="PackedScene" uid="uid://bm52jb014cw0k" path="res://player.tscn" id="6_wbiaa"]
 [ext_resource type="Texture2D" uid="uid://yb7ixgaswfuo" path="res://textureToUse2.png" id="7_cksf7"]
 [ext_resource type="PackedScene" uid="uid://d1v7bvdop8k7o" path="res://numberButton.tscn" id="9_qrjpn"]
 [ext_resource type="PackedScene" uid="uid://6yur6ikk851g" path="res://guard.tscn" id="10_mpglb"]
+[ext_resource type="AudioStream" uid="uid://bhdk2rbebq0bj" path="res://doorOpenSound.wav" id="12_kdsng"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qa4xo"]
 shader = ExtResource("3_68778")
@@ -210,6 +212,29 @@ theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="speedrunTimerLabel" type="Label" parent="UILayer"]
+process_mode = 3
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("6_dgt6d")
+
+[node name="tabMainMenuLabel" type="Label" parent="UILayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -51.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Press tab to 
+end the game 
+and go to the main menu."
+horizontal_alignment = 1
+vertical_alignment = 2
+
 [node name="background" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_kn8fg")
 position = Vector2(574, 327.5)
@@ -291,6 +316,11 @@ position = Vector2(577, 360)
 
 [node name="guard5" parent="." instance=ExtResource("10_mpglb")]
 position = Vector2(914, 464)
+
+[node name="doorSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(600, 111)
+stream = ExtResource("12_kdsng")
+volume_db = -20.0
 
 [connection signal="timeout" from="UILayer/overlaySprite/noiseTimer" to="UILayer/overlaySprite" method="_on_noise_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
