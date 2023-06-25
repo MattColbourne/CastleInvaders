@@ -30,7 +30,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if $TileMap.get_cell_atlas_coords(0,$TileMap.local_to_map($player.global_position)) == Vector2i(2,0):
+		#print("on lava")
+		$player.onFire()
+	else:
+		$player.notOnFire()
 
 
 func _on_area_2d_body_entered(body):

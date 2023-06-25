@@ -29,8 +29,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
+	#print(Vector2i($player.global_position))
+	if $TileMap.get_cell_atlas_coords(0,$TileMap.local_to_map($player.global_position)) == Vector2i(2,0):
+		$player.onFire()
+	else:
+		$player.notOnFire()
 func openDoor() -> void:
 	$doorMap.visible = false
 	$StaticBody2D.queue_free()

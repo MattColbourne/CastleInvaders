@@ -48,7 +48,7 @@ func playerCaught() -> void:
 	$EnemyVision.modulate = Color(255,0,0)
 	$EnemyVision3.modulate = Color(255,0,0)
 	$caughtTransition.caught()
-	get_tree().paused = true
+	#get_tree().paused = true
 	
 	
 	

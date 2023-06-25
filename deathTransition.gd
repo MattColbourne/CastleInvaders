@@ -18,6 +18,7 @@ func _process(delta):
 		get_tree().change_scene_to_packed(startLevel)
 
 func caught() -> void:
+	get_tree().paused = true
 	$caughtSound.play()
 	isCaught = true
 	get_parent().get_parent().add_child(caughtUI.instantiate())
