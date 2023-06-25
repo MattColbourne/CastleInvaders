@@ -11,6 +11,7 @@ func _ready():
 		newGuard = newGuard.instantiate()
 		newGuard.position = Vector2(419,300)
 		add_child(newGuard)
+	
 	elif Global.caughtLevel>1:
 		$guard.queue_free()
 	Global.level = 1

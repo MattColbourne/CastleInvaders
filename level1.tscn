@@ -160,12 +160,20 @@ size = Vector2(259, 112)
 resource_name = "wall"
 texture = ExtResource("3_tw6r7")
 6:1/0 = 0
+6:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:1/0/physics_layer_0/angular_velocity = 0.0
 3:2/0 = 0
+3:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:2/0/physics_layer_0/angular_velocity = 0.0
 1:1/0 = 0
 1:1/0/modulate = Color(0.239216, 0.0980392, 0, 1)
 1:1/0/z_index = 5
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
 4:2/0 = 0
 4:2/0/modulate = Color(0.239216, 0.839216, 0, 1)
+4:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:2/0/physics_layer_0/angular_velocity = 0.0
 
 [sub_resource type="TileSet" id="TileSet_oukwx"]
 occlusion_layer_0/light_mask = 1
